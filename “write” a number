@@ -1,0 +1,80 @@
+#include<stdio.h>
+int main()
+{
+	unsigned long long int n=0;
+	int sum=0;//用来保存求和数据
+	int a=0;//记录每一位上的数 
+	int b=0;//记录sum的每一位数 
+	int c=1;//记录sum除以10的幂
+	scanf("%lld",&n);
+	do{
+		a=n%10;
+		n=n/10;
+		sum+=a;
+	}while(n>0);//用do-while循环保证一位数情况。 
+	 
+	while(sum>=10){
+		b=sum;
+		while(b>=10){
+			b/=10;
+			c*=10;
+		}
+		sum=sum-b*c;
+		switch(b){
+			case 1: printf("yi ");
+			break;
+			case 2: printf("er ");
+			break;
+			case 3: printf("san ");
+			break;
+			case 4: printf("si ");
+			break;
+			case 5: printf("wu ");
+			break;
+			case 6: printf("liu ");
+			break;
+			case 7: printf("qi ");
+			break;
+			case 8: printf("ba ");
+			break;
+			case 9: printf("jiu ");
+			break;
+			}
+		c/=10;
+		while(sum<c){//解决sum中间数位有0的情况
+			if(c>=10){
+				printf("ling ");
+				c/=10;
+			}
+			else break;
+		}
+		c=1;	
+		}
+		
+		
+
+	b=sum;//老师说要专量专用
+	switch(b){
+		case 1: printf("yi");
+		break;
+		case 2: printf("er");
+		break;
+		case 3: printf("san");
+		break;
+		case 4: printf("si");
+		break;
+		case 5: printf("wu");
+		break;
+		case 6: printf("liu");
+		break;
+		case 7: printf("qi");
+		break;
+		case 8: printf("ba");
+		break;
+		case 9: printf("jiu");
+		break;
+		case 0: printf("ling");
+		break;
+	}
+	return 0; 
+}
