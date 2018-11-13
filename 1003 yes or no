@@ -1,0 +1,23 @@
+#include<stdio.h>
+int main()
+{
+	char c;
+	int num;
+	scanf("%d",&num);
+	while(getchar()!='\n');//新知识，这个可以让下一次输入从下一行开始，尤其在scanf和getchar混用的时候很好用。（清楚缓存中的垃圾数据）
+	
+	for(int i=0;i<num;i++){
+		int pos=0;
+		int count[3]={0,0,0};
+		while((c=getchar())!='\n'){
+			if(c=='A')    count[pos]++;
+			else if(c=='P'&&pos==0)    pos=1;
+			else if(c=='T'&&pos==1)    pos=2;
+			else   break;
+		}
+		if(c=='\n'&&pos==2&&count[1]>=1&&count[0]*count[1]==count[2])    puts("YES");//puts函数更方便，甚至自带换行符。尤其在直接输出字符串时。
+		else puts("NO");
+		if(c!='\n') while(c=getchar()!='\n');	
+	}
+	return 0;
+}
