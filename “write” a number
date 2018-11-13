@@ -6,12 +6,15 @@ int main()
 	int a=0;//记录每一位上的数 
 	int b=0;//记录sum的每一位数 
 	int c=1;//记录sum除以10的幂
-	scanf("%lld",&n);
-	do{
-		a=n%10;
-		n=n/10;
-		sum+=a;
-	}while(n>0);//用do-while循环保证一位数情况。 
+	//scanf("%lld",&n);
+	//do{
+		//a=n%10;
+		//n=n/10;
+		//sum+=a;
+	//}while(n>0);//用do-while循环保证一位数情况。
+         while((n=getchar())!='\n'){
+    		sum+=(n-'0');
+	}//用getchar函数读入字符再转换为整型解决了输入量太大的问题。
 	 
 	while(sum>=10){
 		b=sum;
