@@ -1,0 +1,52 @@
+//首先是将问题转换为将数组中的数一一做该变换，在过程中比较，如果数组中出现重复的数即删去。最后为了输出时从大到小，可以在数组输入后就进行排序。
+#include<stdio.h>
+int main()
+{
+	int n=0;
+	int m=0;
+	int a[100]={0};
+	int temp;//用于交换数组中的数以达成从大到小排序的结果 
+	int flag=1;//新学到的tip,可以用来判断是不是第一个，主要还是用在输出带空格的情况下. 
+	scanf("%d",&n);
+	for(int i=0;i<n;i++){
+		scanf("%d",&a[i]);
+	}
+	for(int i=0;i<n-1;i++){
+		for(int j=i+1;j<n;j++){
+			if(a[i]<a[j]){
+				temp=a[i];
+				a[i]=a[j];
+				a[j]=temp;
+			}
+		}
+	}
+	for(int i=0;i<n;i++){
+		if(a[i]!=0){
+			m=a[i];
+			while(m!=1){
+				if(m%2==0){
+					m/=2;
+				}
+				else{
+					m=(3*m+1)/2;
+				} 
+				for(int x=0;x<n;x++){
+					if(a[x]==m){
+						a[x]=0;
+						break;
+					}
+				}
+			}
+		}
+	}
+	for(int i=0;i<n;i++){
+		if(a[i]!=0&&flag!=0){
+			printf("%d",a[i]);
+			flag--;
+		}
+		else if(a[i]!=0&&flag==0){
+			printf(" %d",a[i]);
+		}
+	}
+	return 0;
+}
