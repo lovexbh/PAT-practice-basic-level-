@@ -1,0 +1,28 @@
+//让我们定义 dn 为：dn = pn+1 - pn，其中 pi 是第i个素数。显然有 d1=1 且对于n>1有 dn 是偶数。“素数对猜想”认为“存在无穷多对相邻且差为2的素数”。
+现给定任意正整数N (< 105)，请计算不超过N的满足猜想的素数对的个数。
+#include<stdio.h>
+#include<math.h>
+int isprime(int num);//先写一个函数判定是否是素数，主函数部分就会很简单。
+int main()
+{
+	int n=0;
+	int cnt=0;
+	scanf("%d",&n);
+	for(int i=3;i<=n-2;i+=2){//记得不要忘记n-2
+		if(isprime(i)==1&&isprime(i+2)==1){
+			cnt++;
+		}
+	}
+	printf("%d",cnt);
+	return 0;
+}
+
+int isprime(int num){//函数部分就是考虑数据比较大的情况，用开平方根的方法。
+	int k=sqrt(num);
+	for(int i=2;i<=k;i++){
+		if(num%i==0){
+			return 0;
+		}
+	}
+	return 1;
+}
