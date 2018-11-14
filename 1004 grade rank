@@ -1,0 +1,31 @@
+//读入 n（>0）名学生的姓名、学号、成绩，分别输出成绩最高和成绩最低学生的姓名和学号。
+//核心思路是建立三个字符串数组，一个为最高，一个为最低，一个为当前，不断更新。注意学习这种通过不断更新来简化代码的方式。
+#include<stdio.h>
+#include<string.h>
+int main(){
+	char max_name[11],max_id[11];//最大的学生的各项数据   注意考虑到最大10位，但要预留出最后存放'0'的部分
+	char min_name[11],min_id[11];//最小的学生的各项数据
+	int max_score=0;
+	int min_score=100;
+	char name[11],id[11];
+	int n;
+	int score;
+	scanf("%d",&n);
+	for(int i=0;i<n;i++){
+		scanf("%s",&name);
+		scanf("%s",&id);
+		scanf("%d",&score);
+		if(score>max_score){
+			max_score=score;
+			strcpy(max_name,name);//新学到的用strcpy函数来复制字符串
+			strcpy(max_id,id);
+		}
+		if(score<min_score){
+			min_score=score;
+			strcpy(min_name,name);
+			strcpy(min_id,id);
+		}
+	}
+	printf("%s %s\n%s %s",max_name,max_id,min_name,min_id);
+	return 0;
+}
