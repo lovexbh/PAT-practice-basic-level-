@@ -1,0 +1,27 @@
+//给定区间[-231, 231]内的3个整数A、B和C，请判断A+B是否大于C。
+//本题比较简单，但是有两个陷阱，一个是输入是T组一起输入的，要全部输入完才输出。另一个是数据交大，不只是长整型数，还有长整型数组。
+#include<stdio.h>
+int main()
+{
+	long int a,b,c;
+	long int num[100][3];
+	int n=0;
+	int cnt;
+	scanf("%d",&n);
+	for(int i=0;i<n;i++){
+		scanf("%ld %ld %ld",&a,&b,&c);
+		num[i][0]=a;
+		num[i][1]=b;
+		num[i][2]=c;
+		cnt=i;
+	}
+	for(int i=0;i<=cnt;i++){
+		if((num[i][0]+num[i][1])>num[i][2]){
+			printf("Case #%d: true\n",i+1);
+		}
+		else{
+			printf("Case #%d: false\n",i+1);
+		}
+	}
+	return 0;
+}
