@@ -1,0 +1,41 @@
+//给定一句英语，要求你编写程序，将句中所有单词的顺序颠倒输出。
+//问题比较简单，关键在输入输出。做法是用一个二维字符串数组，第一个下标记录顺序。然后反向输出即可。
+#include<stdio.h>
+int main(){
+	char c[100][100];
+	char s;
+	int i=0;
+	int j=0;
+	int flag=0;//用于终止输入
+	while((s=getchar())!='\n'){
+		if(s!=' '){
+			c[i][j]=s;
+			j++; 
+		}
+		else{
+			c[i][j+1]='\0';
+			i++;
+			j=0;
+		}
+	}
+	for(int m=i;m>0;m--){
+		for(int n=0;;n++){
+			if(c[m][n]=='\0'){
+				printf(" ");
+				break;
+			}
+			else{
+				printf("%c",c[m][n]);
+			}
+		}
+	}
+	for(int n=0;;n++){
+		if(c[0][n]=='\0'){
+			break;
+		}
+		else{
+			printf("%c",c[0][n]);
+		}
+	}
+	return 0;
+}
