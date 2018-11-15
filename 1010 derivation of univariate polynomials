@@ -1,0 +1,24 @@
+//设计函数求一元多项式的导数。（注：xn（n为整数）的一阶导数为n*xn-1。
+//这个题的难点在于输入。学习到可以用scanf函数作为while循环的条件。一旦输出EOF，即停止循环。
+//结果只有零是不输出的，之前考虑这种情况，少一个case
+//边读入边输出，尽量提高效率
+#include<stdio.h>
+int main(){
+	int x,y;//记录输入的数
+	int flag=0;
+	while(scanf("%d %d",&x,&y)!=EOF){
+		if((x*y)!=0){
+			if(flag!=0){
+				printf(" ");
+			}
+			x*=y;
+			y--;
+			printf("%d %d",x,y);
+			flag++;
+		}
+		if(flag==0){
+			printf("0 0");
+		}
+	}
+	return 0; 
+} 
