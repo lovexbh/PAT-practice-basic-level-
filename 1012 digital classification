@@ -1,0 +1,76 @@
+//给定一系列正整数，请按要求对数字进行分类，并输出以下5个数字：
+//A1 = 能被5整除的数字中所有偶数的和；
+//A2 = 将被5除后余1的数字按给出顺序进行交错求和，即计算n1-n2+n3-n4...；
+//A3 = 被5除后余2的数字的个数；
+//A4 = 被5除后余3的数字的平均数，精确到小数点后1位；
+//A5 = 被5除后余4的数字中最大数字。
+//这个题目不是很难，但是陷阱真的讨厌。这里新学到一个只是，就是用scanf函数！=EOF判断读入停止的时候，oj上有效但是IDE有bug
+//另外,A2中如果有多个数加减结果等于零，不能判断为N，其余就比较简单了。但是函数比较长。
+#include<stdio.h>
+int main(){
+	int num[1001];
+	int A[5]={0};
+	int n;
+	int p=0;
+	int j=1;
+	int k=0;
+	double a=0.0;
+	while(scanf("%d",&num[p])!=EOF){
+		p++;
+	}
+	n=num[0];
+	for(int i=1;i<=n;i++){
+		if((num[i]%10)==0){
+			A[0]+=num[i];
+		}
+		if((num[i])%5==1){
+			if((j%2)==1){
+				A[1]+=num[i];
+			}
+			else{
+				A[1]-=num[i];
+			}
+			j++;
+		}
+		if((num[i]%5)==2){
+			A[2]++;
+		}
+		if((num[i]%5)==3){
+			A[3]+=num[i];
+			k++;
+		}
+		if((num[i]%5)==4){
+			if(num[i]>A[4]){
+				A[4]=num[i];
+			}
+		}
+	}
+	a=A[3];
+	float m=a/k;
+	for(int i=0;i<4;i++){
+		if(A[i]==0){
+			if(i==1){
+				if(j>1){
+					printf("0 ");
+				}
+				else{
+					printf("N ");
+				}
+			}
+			else{
+				printf("N ");
+			}
+		}
+		else if(i==3){
+			printf("%.1f ",m);
+		}
+		else printf("%d ",A[i]);
+	}
+	if(A[4]==0){
+		printf("N");
+	}
+	else{
+		printf("%d",A[4]);
+	}
+	return 0;	
+}
