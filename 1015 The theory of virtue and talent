@@ -1,0 +1,77 @@
+//题目太长，不抄了，核心是个用qsort函数进行的结构体三级排序，学了好多东西
+include<stdio.h>
+#include<stdlib.h>//调用qsort函数的头文件
+typedef struct student{//定义一个名为student的结构体
+	int num;
+	int de;
+	int cai;
+}Stu;//这里的Stu是接下来用来定义的变量类型，类似int
+int cmp(const void*p1,const void*p2){//定义cmp函数，qsort函数必须，相当于手写一个比较函数。返回值必须是int
+		Stu *p=(struct student*)p1;//定义p,q两个指针，等于（struct student型的指针p1，p2，用数组就是int型指针，其他同理
+		Stu *q=(struct student*)p2;
+		if(p->de+p->cai!=q->de+q->cai){//降序就是后减去前，升序相反
+			return (q->de+q->cai)-(p->de+p->cai);
+		}
+		else if(p->de!=q->de){
+			return q->de-p->de;
+		}
+		else{
+			return p->num-q->num;//三重条件分别定义完
+		}
+}
+void printstu(Stu *stu,int pre){//定义输出函数，前者为Stu类型的指针变量，就是一个结构体数组后者为数组长度
+	int i;
+	for(i=0;i<pre;i++){
+		printf("%d %d %d\n",stu[i].num,stu[i].de,stu[i].cai);
+	}
+}
+int main()
+{
+	static Stu stu1[100001],stu2[100001],stu3[100001],stu4[100001];//输入数据过大，使用static存在固定区域。定义四个结构体数组，对应四类人。
+	int N,L,H;
+	int num,de,cai;
+	int s1=0;
+	int s2=0;
+	int s3=0;
+	int s4=0;
+	scanf("%d %d %d",&N,&L,&H);//输入三个参数.
+	for(int i=0;i<N;i++){
+		scanf("%d %d %d",&num,&de,&cai);//通过for循环将输入的数据分拣到四个结构体数组里。
+		if(de>=L&&cai>=L){
+			if(de>=H&&cai>=H){
+				stu1[s1].num=num;
+				stu1[s1].de=de;
+				stu1[s1].cai=cai;
+				s1++;
+			}
+			else if(de>=H&&cai<H){
+				stu2[s2].num=num;
+				stu2[s2].de=de;
+				stu2[s2].cai=cai;
+				s2++;
+			}
+			else if(de>=cai&&de<H){
+				stu3[s3].num=num;
+				stu3[s3].de=de;
+				stu3[s3].cai=cai;
+				s3++;
+			}
+			else{
+				stu4[s4].num=num;
+				stu4[s4].de=de;
+				stu4[s4].cai=cai;
+				s4++;
+			}
+		}
+	}
+	printf("%d\n",s1+s2+s3+s4);//先输出合格人数
+	qsort(stu1,s1,sizeof(stu1[0]),cmp);//用qsort函数重新排序
+	qsort(stu2,s2,sizeof(stu2[0]),cmp);
+	qsort(stu3,s3,sizeof(stu3[0]),cmp);
+	qsort(stu4,s4,sizeof(stu4[0]),cmp);
+	printstu(stu1,s1);//按序输出
+	printstu(stu2,s2);
+	printstu(stu3,s3);
+	printstu(stu4,s4);
+	return 0;
+} 
