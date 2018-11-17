@@ -1,0 +1,55 @@
+//月饼是中国人在中秋佳节时吃的一种传统食品，不同地区有许多不同风味的月饼。现给定所有种类月饼的库存量、总售价、以及市场的最大需
+//求量，请你计算可以获得的最大收益是多少。
+//又是结构体的qsort循环，注意double形式的问题。所有说是正数的全用double，中间不要用其他量传递。
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct moon{
+	double w;
+	double sum;
+	double pri;
+}Moon;
+int cmp(const void *a,const void *b){
+		Moon *a1=(struct moon*)a;
+		Moon *b1=(struct moon*)b;
+		if(b1->pri>=a1->pri){
+			return 1;
+		}
+		else return 0;
+}
+int main()
+{
+	int m=0;
+	int n=0;
+	Moon moo[1000];
+	int k=0;
+	scanf("%d %d",&n,&m);
+	for(int i=0;i<n;i++){
+		scanf("%lf",&moo[i].w);
+	}
+	for(int i=0;i<n;i++){
+		scanf("%lf",&moo[i].sum);
+		moo[i].pri=moo[i].sum/moo[i].w;
+	}
+	qsort(moo,n,sizeof(moo[0]),cmp);
+	double W=0.0;
+	int num=0;
+	double money=0.0;
+	int flag=0;
+	for(int i=0;i<n;i++){
+		W+=moo[i].w;
+		money+=moo[i].sum;
+		if(W>=m){
+			num=i;
+			flag++;
+			break;
+		}	
+	}
+	if(flag==0){
+		printf("%0.2f",money);
+	}
+	else{
+		money-=(W-m)*moo[num].pri;
+		printf("%0.2f",money);
+	}
+	return 0;
+}
