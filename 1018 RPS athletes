@@ -1,0 +1,66 @@
+//现给出两人的交锋记录，请统计双方的胜、平、负次数，并且给出双方分别出什么手势的胜算最大。
+//题目不难，输入时记得scanf后要把第一行的回车吃了
+//判断最大可以写个函数
+//这里用二维数组储存信息，可以只用一维数组边输入边输出。
+#include<stdio.h>
+long int max(long int a,long int b,long int c); 
+int main()
+{
+	long int s,f,p;
+	long int c,j,b,c1,j1,b1;
+	s=0; f=0; p=0; c=0; j=0; b=0; c1=0; j1=0; b1=0;
+	long int n=0;
+	scanf("%ld",&n);
+	getchar();
+	char m[n][4];
+	char ch='8';
+	for(int i=0;i<n;i++){
+		int j=0;
+		while((ch=getchar())!='\n'){
+			m[i][j]=ch;
+			j++;
+		}
+	}
+	for(int i=0;i<n;i++){
+		if(m[i][0]-m[i][2]==0){
+			p++;
+		}
+		else if(m[i][0]-m[i][2]==1){
+			f++;
+			b1++;
+		}
+		else if(m[i][0]-m[i][2]==-1){
+			s++;
+			b++;
+		}
+		else if(m[i][0]-m[i][2]==-7){
+			s++;
+			c++;
+		}
+		else if(m[i][0]-m[i][2]==7){
+			f++;
+			c1++;
+		}
+		else if(m[i][0]-m[i][2]==8){
+			s++;
+			j++;
+		}
+		else if(m[i][0]-m[i][2]==-8){
+			f++;
+			j1++;
+		}
+	}
+	char x=max(b,c,j);
+	char y=max(b1,c1,j1);
+	printf("%ld %ld %ld\n",s,p,f);
+	printf("%ld %ld %ld\n",f,p,s);
+	printf("%c %c",x,y);
+	return 0;
+ } 
+ long int max(long int a,long int b,long int c){
+ 	char ret;
+ 	if(a>=b&&a>=c) ret='B';
+ 	if(b>a&&b>=c) ret='C';
+ 	if(c>a&&c>b) ret='J';
+ 	return ret;
+ }
