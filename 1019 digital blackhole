@@ -1,0 +1,63 @@
+//给定任一个各位数字不完全相同的4位正整数，如果我们先把4个数字按非递增排序，再按非递减排序，然后
+//用第1个数字减第2个数字，将得到一个新的数字。一直重复这样做，我们很快会停在有“数字黑洞”之称的6174，
+//这个神奇的数字也叫Kaprekar常数。 例如，我们从6767开始，将得到
+//题目不难，输入没问题，自己写两个排序函数，也没什么特殊情况，注意输出格式的空格。
+#include<stdio.h>
+int max(int a[],int i);
+int min(int b[],int j);
+int main()
+{
+	int n=0;
+	scanf("%d",&n);
+	int s[4];
+	int m=0;
+	int num=0;
+	while(num!=6174){
+		s[0]=n/1000;
+		s[1]=(n-s[0]*1000)/100;
+		s[2]=(n-s[0]*1000-s[1]*100)/10;
+		s[3]=n%10;
+		m=min(s,4);
+		n=max(s,4);
+		num=n-m;
+		if(num==0||num==6174){
+			printf("%04d - %04d = %04d",n,m,num);
+			break;
+		}
+		else{
+			printf("%04d - %04d = %04d\n",n,m,num);
+		}
+		n=num;
+	}
+	return 0;
+}
+int max(int a[],int i){
+	int ret;
+	int temp;
+	for(int m=0;m<3;m++){
+		for(int p=0;p<i-1;p++){
+			if(a[p]<a[p+1]){
+				temp=a[p];
+				a[p]=a[p+1];
+				a[p+1]=temp;
+			}
+		}
+	}
+	ret=1000*a[0]+100*a[1]+10*a[2]+a[3];
+	return ret;
+} 
+int min(int b[],int j){
+	int ret;
+	int temp;
+	for(int m=0;m<3;m++){
+		for(int p=0;p<j-1;p++){
+			if(b[p]>b[p+1]){
+				temp=b[p];
+				b[p]=b[p+1];
+				b[p+1]=temp;
+			}
+		}
+	}
+	ret=1000*b[0]+100*b[1]+10*b[2]+b[3];
+	return ret;
+}
