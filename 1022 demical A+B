@@ -1,0 +1,28 @@
+//输入两个非负10进制整数A和B(<=2^30^-1)，输出A+B的D (1 < D <= 10)进制数
+//题目很简单，注意考虑输入两个零的情况。还有就是，进制的幂不要算错。
+#include<stdio.h>
+int main(){
+	long int a,b;
+	int d;
+	scanf("%ld %ld %d",&a,&b,&d);
+	long int sum=a+b;
+	int cnt=0;
+	long int k=1;
+	int m=0;
+	while(k<=sum){
+		k*=d;
+		cnt++;
+	}
+	if(sum==0){
+		printf("0");
+	}
+	k/=d;
+	cnt--;
+	for(int i=cnt;i>=0;i--){
+		m=sum/k;
+		sum%=k;
+		putchar((m+'0'));
+		k/=d;
+	}
+	return 0;
+}
