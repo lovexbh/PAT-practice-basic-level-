@@ -1,0 +1,24 @@
+//给定一个k位整数N = dk-1*10k-1 + ... + d1*101 + d0 (0<=di<=9, i=0,...,k-1, dk-1>0)，请编写程序统计每种不同的个位数字出现的次数。
+//例如：给定N = 100311，则有2个0，3个1，和1个3
+//题目非常简单，注意输入用getchar，输出最后一个不换行就完事了。
+#include<stdio.h>
+int main(){
+	char ch='=';
+	int num[10]={0};
+	int max=0;
+	while((ch=getchar())!='\n'){
+		int n=0;
+		n=ch-'0';
+		num[n]++;
+		if(n>=max){
+			max=n;
+		}
+	}
+	for(int i=0;i<max;i++){
+		if(num[i]!=0){
+			printf("%d:%d\n",i,num[i]);
+		}
+	}
+	printf("%d:%d",max,num[max]);
+	return 0;
+}
