@@ -1,0 +1,46 @@
+//这题坑在右边半边的空格不用打，刚做的时候掉坑里了，其他的还好，没什么问题。打印的时候注意不要搞错就好。
+#include<stdio.h>
+int sand(int i);
+int main()
+{
+	int n=0;
+	char c;
+	scanf("%d %c",&n,&c);
+	int cnt;
+	cnt=sand(n);
+	int j=0;
+	for(int i=1;i<=cnt;i++){
+		if(cnt>2*j){
+			for(int k=0;k<j;k++){
+				printf(" ");
+			}
+			for(int k=0;k<cnt-2*j;k++){
+				printf("%c",c);
+			}
+		}
+		else{
+			for(int k=0;k<cnt-j-1;k++){
+				printf(" ");
+			}
+			for(int k=0;k<2*j-cnt+2;k++){
+				printf("%c",c);
+			}
+		}
+		printf("\n"); 
+		j++;
+	}
+	int m;
+	m=(cnt+1)*(cnt+1)/2-1;
+	printf("%d",n-m);
+	return 0;
+}
+int sand(int i){
+	int ret;
+	for(int p=1;p<=49;p+=2){
+		if(((p+1)*(p+1)/2-1)>i){
+			ret=p-2;
+			break;
+		}
+	}
+	return ret;
+}
