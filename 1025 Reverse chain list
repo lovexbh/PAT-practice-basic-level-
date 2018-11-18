@@ -1,0 +1,48 @@
+//给定一个常数K以及一个单链表L，请编写程序将L中每K个结点反转。例如：给定L为1→2→3→4→5→6，K为3，则输出应该为3→2→1→6→5→4；如果K为4，
+//则输出应该为4→3→2→1→5→6，即最后不到K个元素不反转。
+//应该是最近做的最难的一道题目了。用了链表的思想，并不要求真的写一个链表。注意结构体数组的下标大小，要加static，外加非法访问的问题。注意带绝对值。
+#include<stdio.h>
+#include<math.h>
+typedef struct {
+	int add;//地址 
+	int data;//数据 
+	int next;//下个节点的地址 
+}NUM;
+int main()
+{
+	int addr,N,K;//初始数据 
+	scanf("%d %d %d",&addr,&N,&K);
+	static NUM origin[100001],sort[100001];//输入的按地址存放的结构和之后按顺序存放的结构 
+	for(int i=0;i<N;i++){//读取节点 
+		NUM temp;
+		scanf("%d %d %d",&temp.add,&temp.data,&temp.next);
+		origin[abs(temp.add)]=temp;
+	} 
+	for(int i=0;i<N;i++){//链接节点 
+		sort[i]=origin[abs(addr)];
+		addr=sort[i].next;//获取下一个节点的地址
+		if(addr==-1){
+			N=i+1;//节点总数变少 
+			break;
+		} 
+	}
+	for(int i=0;i<N/K;i++){//反转次数
+		for(int j=0;j<K/2;j++){//进行反转 
+			NUM temp;
+			temp=sort[j+i*K];//每一段开头和结尾互换中间也互换。 
+			sort[j+i*K]=sort[(i+1)*K-j-1];
+			sort[(i+1)*K-j-1]=temp;
+		} 
+	}
+	for(int i=0;i<N;i++){//换链接地址外加输出 
+		if(i!=N-1){
+			sort[i].next=sort[i+1].add;
+			printf("%05d %d %05d\n",sort[i].add,sort[i].data,sort[i].next);
+		}
+		else{
+			sort[i].next=-1;
+			printf("%05d %d %d\n",sort[i].add,sort[i].data,sort[i].next);
+		}
+	}
+	return 0;
+}
