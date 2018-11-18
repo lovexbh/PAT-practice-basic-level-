@@ -1,0 +1,67 @@
+//科学计数法是科学家用来表示很大或很小的数字的一种方便的方法，其满足正则表达式[+-][1-9]"."[0-9]+E[+-][0-9]+，即数字的整数部分只有1位，
+//小数部分至少有1位，该数字及其指数部分的正负号即使对正数也必定明确给出。现以科学计数法的格式给出实数A，请编写程序按普通数字表示法输出A，
+//并保证所有有效位都被保留。
+//此题较为繁琐，一个重点是输入问题。分类要注意。另一个就是分类讨论一定要全。输出时不要求正数带正号。
+#include<stdio.h>
+int main()
+{
+	char sign;
+	sign=getchar();
+	if(sign=='-'){
+		putchar(sign);
+	}
+	char a[10020];
+	int i=0;
+	int mi=0;
+	char ch;
+	while((ch=getchar())!='E'){
+		a[i]=ch;
+		i++;
+	}
+	a[i]=ch;
+	scanf("%d",&mi);
+	if(mi==0){
+		int n=0;
+		while(a[n]!='E'){
+			putchar(a[n]);
+			n++;
+		}
+	}
+	else if(mi>0){
+		if(mi>=(i-2)){
+			for(int p=0;p<i;p++){
+				if(a[p]!='.'){
+					putchar(a[p]);
+				}
+			}
+			for(int q=1;q<=(mi+2-i);q++){
+				putchar('0');
+			}
+		}
+		else{
+			for(int p=0;p<mi+2;p++){
+				if(a[p]!='.'){
+					putchar(a[p]);
+				}
+			}
+			putchar('.');
+			for(int q=mi+2;q<i;q++){
+				putchar(a[q]);
+			}
+		}
+	}
+	else{
+		int M=-mi;
+		putchar('0');
+		putchar('.');
+		for(int q=0;q<M-1;q++){
+			putchar('0');
+		}
+		for(int p=0;p<i;p++){
+			if(a[p]!='.'){
+				putchar(a[p]);
+			}
+		}
+	}
+	return 0;
+}
