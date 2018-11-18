@@ -1,0 +1,21 @@
+//现给定被测函数前后两次获得的时钟打点数，请你给出被测函数运行的时间。
+//简单的题目，注意四舍五入和输出形式即可.
+#include<stdio.h>
+int main()
+{
+	long int a,b;
+	scanf("%ld %ld",&a,&b);
+	long int time=(b-a)/100;
+	int r=(b-a)%100;
+	if(r>=50){
+		time++;
+	}
+	int h,m,s;
+	h=time/3600;
+	time-=h*3600;
+	m=time/60;
+	time-=m*60;
+	s=time;
+	printf("%02d:%02d:%02d",h,m,s);
+	return 0;
+}
