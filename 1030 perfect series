@@ -1,0 +1,49 @@
+//给定一个正整数数列，和正整数p，设这个数列中的最大值是M，最小值是m，如果M <= m * p，则称这个数列是完美数列。
+//现在给定参数p和一些正整数，请你从中选择尽可能多的数构成一个完美数列。
+//比前几道25分题简单一些，主要是要优化算法避免超时，这里在前一个数得到的数列长度的基础上进行循环，可以大大提高效率。
+#include<stdio.h>
+#include<stdlib.h>
+int cmp(const void *a,const void *b){
+	return *(int *)a-*(int *)b;
+}
+int main()
+{
+	long int n=0;
+	long int p=0;
+	long int a[100000];
+	long int cnt=0;
+	int flag=0;
+	scanf("%ld %ld",&n,&p);
+	for(long int i=0;i<n;i++){
+		scanf("%ld",&a[i]);
+	}
+	qsort(a,n,sizeof(a[0]),cmp);
+	for(long int i=0;i<n;i++){
+		long int m=0;
+		m=a[i]*p;
+		if(i>=1){
+			if(a[i]>m*a[i-1]){
+				continue;
+			}
+		}
+		for(long int j=cnt+i;j<n;j++){
+			if(a[j]>m){
+				if(j-i>cnt){
+					cnt=j-i;
+				}
+				break;
+			}
+			if(j==n-1&&a[j]<=m){
+				if(j-i+1>cnt){
+					cnt=j-i+1;
+				}
+				flag++;
+			}
+		}
+		if(flag==1){
+			break;
+		}
+	}
+	printf("%ld",cnt);
+	return 0;
+} 
