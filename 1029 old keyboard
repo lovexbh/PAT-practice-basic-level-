@@ -1,0 +1,58 @@
+//旧键盘上坏了几个键，于是在敲一段文字的时候，对应的字符就不会出现。现在给出应该输入的一段文字、以及实际被输入的文字，
+//请你列出肯定坏掉的那些键
+//题目不难，较为繁琐，注意输出时的大小写，还有重复的键位只能算一次。
+#include<stdio.h>
+int main()
+{
+	char a[81];
+	char b[81];
+	char c[81];
+	int m=0;
+	int n=0;
+	int p=0;
+	for(int i=0;i<81;i++){
+		a[i]='\0';
+		b[i]='\0';
+		c[i]='\0';
+	}
+	char ch;
+	while((ch=getchar())!='\n'){
+		a[m]=ch;
+		m++;
+	}
+	ch='1';
+	while((ch=getchar())!='\n'){
+		b[n]=ch;
+		n++;
+	}
+	for(int i=0;i<m;i++){
+		int cnt=0;
+		for(int j=0;j<n;j++){
+			if(a[i]!=b[j]){
+				cnt++;
+			}
+		}
+		if(cnt==n){
+			c[p]=a[i];
+			p++; 
+		}
+	}
+	for(int i=0;i<p;i++){
+		if(c[i]>='a'&&c[i]<='z'){
+			c[i]-=32;
+		}
+	}
+	for(int i=0;i<p;i++){
+		for(int j=0;j<p;j++){
+			if(c[i]==c[j]&&i!=j){
+				c[j]='\0';
+			}
+		}
+	}
+	for(int i=0;i<p;i++){
+		if(c[i]!='\0'){
+			putchar(c[i]);
+		}
+	}
+	return 0;
+}
