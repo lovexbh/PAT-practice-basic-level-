@@ -1,0 +1,79 @@
+//插入排序是迭代算法，逐一获得输入数据，逐步产生有序的输出序列。每步迭代中，算法从输入序列中取出一元素，将之插入有序序列中正确的位置。
+//如此迭代直到全部元素有序。归并排序进行如下迭代操作：首先将原始序列看成 N 个只包含 1 个元素的有序子序列，然后每次迭代归并两个相邻的有序子序列，
+//直到最后只剩下 1 个有序的序列。现给定原始序列和由某排序算法产生的中间序列，请你判断该算法究竟是哪种排序算法？
+//还是考研qsort函数，这里新学到对一个水煮鱼部分排序的方法。不过要注意保留原顺序分别用于两种检验。
+#include<stdio.h>
+#include<stdlib.h>
+int cmp(const void *a,const void *b){
+	return *(int *)a-*(int *)b;
+}
+int main()
+{
+	int n=0;
+	scanf("%d",&n);
+	int a[n],b[n],c[n];
+	int flag=0;
+	int max=0;
+	for(int i=0;i<n;i++){
+		scanf("%d",&a[i]);
+		c[i]=a[i];
+	}
+	for(int i=0;i<n;i++){
+		scanf("%d",&b[i]);
+	}
+	for(int i=2;i<=n;i++){
+		int cnt=0;
+		qsort(a,i,sizeof(a[0]),cmp);
+		for(int j=0;j<n;j++){
+			if(a[j]==b[j]){
+				cnt++;
+			} 
+		}
+		if(cnt==n){
+			flag++;
+			max=i;
+			break;
+		}
+	}
+	if(flag==1){
+		printf("Insertion Sort\n");
+		if(max==n){
+			for(int i=0;i<n-1;i++){
+				printf("%d ",a[i]);
+			}
+			printf("%d",a[n-1]);
+		}
+		else{
+			qsort(a,max+1,sizeof(a[0]),cmp);
+			for(int i=0;i<n-1;i++){
+				printf("%d ",a[i]);
+			}
+			printf("%d",a[n-1]);
+		}
+	}
+	else{
+		printf("Merge Sort\n");
+		int k=1;
+		int Flag=1;
+		while(Flag){
+			Flag=0;
+			int p=0;
+			for(int i=0;i<n;i++){
+				if(c[i]!=b[i]){
+					Flag=1;
+					break;
+				}
+			}
+			k*=2;
+			for(p=0;p<n/k;p++){
+				qsort(c+p*k,k,sizeof(int),cmp);
+			}
+			qsort(c+p*k,n-p*k,sizeof(int),cmp);
+		}
+		for(int i=0;i<n-1;i++){
+			printf("%d ",c[i]);
+		}
+		printf("%d",c[n-1]);
+	}
+	return 0;
+}
