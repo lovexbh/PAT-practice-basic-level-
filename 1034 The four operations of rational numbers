@@ -1,0 +1,96 @@
+//本题要求编写程序，计算 2 个有理数的和、差、积、商。
+//题目真的很繁琐，把它拆成三个模块来做，包括求最大公约数（辗转相除法），输出一个数的题目所求的分数形式，输出算式整体。
+#include<stdio.h>
+long long gys(long long a,long long b){//辗转相除法求最大公约数。 
+	long long m=a%b;
+	while(m!=0){
+		a=b;
+		b=m;
+		m=a%b; 
+	}
+	return b;
+}
+void printfs(long long a,long long b){//按题目要求输出分数形式 
+	long long k=1;
+	long long Gys;
+	if(b==0){
+		printf("Inf");
+		return;
+	}
+	if(a<0){
+		a=-a;
+		k=-1;
+	}
+	Gys=gys(a,b);
+	a=a/Gys;
+	b=b/Gys;
+	if(a/b==0&&a!=0){//真分数 
+		if(k>0){
+			printf("%lld/%lld",a,b);
+		}
+		else{
+			printf("(%lld/%lld)",-a,b);//因为此时a为正，要输出负数。
+		}
+		return;
+	}
+	k=k*a/b;//假分数 
+	a=a%b;
+	if(b==1&&k<0){
+		printf("(%lld)",k);
+	}
+	else if(b==1&&k>=0){
+		printf("%lld",k);//a=0和b=1以及k=0其实是同一种情况 
+	}
+	else if(k<0){
+		printf("(%lld %lld/%lld)",k,a,b);
+	}
+	else{
+		printf("%lld %lld/%lld",k,a,b);
+	}
+}
+void print(long long a1,long long b1,long long a2,long long b2,char c){
+	long long x,y;
+	printfs(a1,b1);
+	printf(" %c ",c);
+	printfs(a2,b2);
+	printf(" = ");
+	switch(c){
+		case '+':
+			x=a1*b2+a2*b1;
+			y=b1*b2;
+			printfs(x,y);
+			printf("\n");
+			break;
+		case '-':
+			x=a1*b2-a2*b1;
+			y=b1*b2;
+			printfs(x,y);
+			printf("\n");
+			break;
+		case '*': 
+			x=a1*a2;
+			y=b1*b2;
+			printfs(x,y);
+			printf("\n");
+			break;
+		case '/':
+			x=a1*b2;
+			y=a2*b1;
+			if(y<0){//之前函数默认只能分子为负数
+				x=-x;
+				y=-y;
+			}
+			printfs(x,y);
+			break; 
+	}
+}
+int main()
+{
+	long long a1,b1,a2,b2;
+	scanf("%lld/%lld %lld/%lld",&a1,&b1,&a2,&b2);
+	print(a1,b1,a2,b2,'+');
+	print(a1,b1,a2,b2,'-');
+	print(a1,b1,a2,b2,'*');
+	print(a1,b1,a2,b2,'/');
+	return 0;
+}
