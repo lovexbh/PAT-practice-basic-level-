@@ -1,0 +1,46 @@
+//旧键盘上坏了几个键，于是在敲一段文字的时候，对应的字符就不会出现。现在给出应该输入的一段文字、以及坏掉的那些键，打出的结果文字会是怎样？
+//题目本身很简单，只要考虑好输入输出问题即可，本题最大的坑在于输入，第一行可能存在空行的现象，即每个键都是好的。
+#include<stdio.h>
+int main()
+{
+	char damage[42];
+	char print[100001];
+	char ch='5';
+	int q=0;
+	for(int i=0;i<42;i++){
+		damage[i]='\0';
+	}
+	for(long int i=0;i<100001;i++){
+		print[i]='\0';
+	}
+	while((ch=getchar())!='\n'){
+		damage[q]=ch;
+		q++;
+	}
+	scanf("%s",&print);
+	for(int p=0;p<42;p++){
+		for(long int i=0;i<100001;i++){
+			if(damage[p]>='A'&&damage[p]<='Z'){
+				if(print[i]==damage[p]||print[i]==(damage[p]+32)){
+					print[i]='\0';
+				}
+			}
+			else if(damage[p]=='+'){
+				if(print[i]>='A'&&print[i]<='Z'){
+					print[i]='\0';
+				}
+			}
+			else{
+				if(print[i]==damage[p]){
+					print[i]='\0';
+				}
+			} 
+		}
+	}
+	for(long int i=0;i<100001;i++){
+		if(print[i]!='\0'){
+			putchar(print[i]);
+		}
+	}
+	return 0;
+}
