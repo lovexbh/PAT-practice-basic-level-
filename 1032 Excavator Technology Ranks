@@ -1,0 +1,29 @@
+//为了用事实说明挖掘机技术到底哪家强，PAT组织了一场挖掘机技能大赛。现请你根据比赛结果统计出技术最强的那个学校。
+//题目不难，重要的是数组大小可能越界，无脑用long int 外加定义数组的时候用static就可以了。
+#include<stdio.h>
+int main()
+{
+	long int n=0;
+	scanf("%ld",&n);
+	static long int Score[100001];
+	long int id=0;
+	int score=0;
+	long int cnt=0;
+	long int Max=0;
+	long int Cnt=0;
+	for(long int i=0;i<n;i++){
+		scanf("%ld %d",&id,&score);
+		Score[id]+=score;
+		if(id>cnt){
+			cnt=id;
+		}
+	}
+	for(long int i=0;i<=cnt;i++){
+		if(Score[i]>Max){
+			Max=Score[i];
+			Cnt=i;
+		}
+	}
+	printf("%ld %ld",Cnt,Score[Cnt]);
+	return 0;
+}
