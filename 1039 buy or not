@@ -1,0 +1,50 @@
+//小红想买些珠子做一串自己喜欢的珠串。卖珠子的摊主有很多串五颜六色的珠串，但是不肯把任何一串拆散了卖。于是小红要你帮忙判断一下，
+//某串珠子里是否包含了全部自己想要的珠子？如果是，那么告诉她有多少多余的珠子；如果不是，那么告诉她缺了多少珠子。
+//为方便起见，我们用[0-9]、[a-z]、[A-Z]范围内的字符来表示颜色。例如在图1中，第3串是小红想做的珠串；那么第1串可以买，因为包含了全部她想要的珠子，
+//还多了8颗不需要的珠子；第2串不能买，因为没有黑色珠子，并且少了一颗红色的珠子。
+//不难，和上题类似，用下标表示存储类型，用数组的值表示存储的数量。
+#include<stdio.h>
+int main()
+{
+	char ch='=';
+	int color[75];
+	int cnt=0;
+	int flag=0;
+	for(int i=0;i<75;i++){
+		color[i]=0;
+	}
+	while((ch=getchar())!='\n'){
+		cnt=ch-'0';
+		color[cnt]++;
+	}
+	ch='=';
+	while((ch=getchar())!='\n'){
+		cnt=ch-'0';
+		color[cnt]--;
+	}
+	for(int i=0;i<75;i++){
+		if(color[i]<0){
+			flag++;
+			break;
+		}
+	}
+	if(flag==0){
+		int num=0;
+		for(int i=0;i<75;i++){
+			if(color[i]>0){
+				num+=color[i];
+			}
+		}
+		printf("Yes %d",num);
+	}
+	else{
+		int num=0;
+		for(int i=0;i<75;i++){
+			if(color[i]<0){
+				num-=color[i];
+			}
+		}
+		printf("No %d",num);
+	}
+	return 0;
+ }
