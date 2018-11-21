@@ -1,0 +1,36 @@
+//字符串 APPAPT 中包含了两个单词 PAT，其中第一个 PAT 是第 2 位(P)，第 4 位(A)，第 6 位(T)；第二个 PAT 是第 3 位(P)，第 4 位(A)，第 6 位(T)。
+//现给定字符串，问一共可以形成多少个 PAT？
+//核心思路，先存进数组里，存的过程记录T的总量。然后遍历的过程累积p，累减t，每遇到一个a就把当前（A前的P和A后的T）的p和t乘起来累加到总和上面。
+//最后拿总和对那个大数取余。考虑到数量大小。推荐全用longlong。
+//这种操作只需要遍历一次数组。
+#include<stdio.h>
+int main()
+{
+	long long sum=0;
+	long long p=0;
+	long long t=0;
+	char a[100001];
+	char ch='=';
+	int n=0;
+	while((ch=getchar())!='\n'){
+		a[n]=ch;
+		n++;
+		if(ch=='T'){
+			t++;
+		}
+	}
+	for(long long i=0;i<n;i++){
+		if(a[i]=='P'){
+			p++;
+		}
+		if(a[i]=='T'){
+			t--;
+		}
+		if(a[i]=='A'){
+			sum+=p*t;
+		}
+	}
+	sum%=1000000007;
+	printf("%lld",sum);
+	return 0;
+}
