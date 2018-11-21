@@ -1,0 +1,26 @@
+//本题要求读入 N 名学生的成绩，将获得某一给定分数的学生人数输出。
+//主要是超时问题，用最蠢的方法遍历会超时，这里用一个101的数组按分数存储成绩数量，随后输入比较输出，极为高效。
+#include<stdio.h>
+int main()
+{
+	int n,k;
+	scanf("%d",&n);
+	int score[101];
+	int sc;
+	int num;
+	for(int i=0;i<101;i++){
+		score[i]=0;
+	}
+	for(int i=0;i<n;i++){
+		scanf("%d",&sc);
+		score[sc]++;
+	}
+	scanf("%d",&k);
+	for(int i=0;i<k-1;i++){
+		scanf("%d",&num);
+		printf("%d ",score[num]);
+	}
+	scanf("%d",&num);
+	printf("%d",score[num]);
+	return 0;
+}
