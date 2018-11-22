@@ -1,0 +1,38 @@
+//和上题差不多，水题
+#include<stdio.h>
+int main()
+{
+	int ch[6];
+	for(int i=0;i<6;i++){
+		ch[i]=0;
+	}
+	char c='=';
+	while((c=getchar())!='\n'){
+		switch(c){
+			case 'P': ch[0]++;break;
+			case 'A': ch[1]++;break;
+			case 'T': ch[2]++;break;
+			case 'e': ch[3]++;break;
+			case 's': ch[4]++;break;
+			case 't': ch[5]++;break;
+		}
+	}
+	int sum=1;
+	while(sum>0){
+		for(int i=0;i<6;i++){
+			if(ch[i]>0){
+				switch(i){
+					case 0: printf("P");break;
+					case 1: printf("A");break;
+					case 2: printf("T");break;
+					case 3: printf("e");break;
+					case 4: printf("s");break;
+					case 5: printf("t");break;
+				}
+				ch[i]--;
+			}
+		}
+		sum=ch[0]+ch[1]+ch[2]+ch[3]+ch[4]+ch[5];	
+	}
+	return 0;
+}
