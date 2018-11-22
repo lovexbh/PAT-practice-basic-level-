@@ -1,0 +1,38 @@
+//每个 PAT 考生在参加考试时都会被分配两个座位号，一个是试机座位，一个是考试座位。正常情况下，考生在入场时先得到试机座位号码，
+//入座进入试机状态后，系统会显示该考生的考试座位号码，考试时考生需要换到考试座位就座。但有些考生迟到了，试机已经结束，
+//他们只能拿着领到的试机座位号码求助于你，从后台查出他们的考试座位号码。
+//题目不难，用结构体匹配即可，注意输出格式必须是数字.
+#include<stdio.h>
+typedef struct{
+	long long id;
+	int s1;
+	int s2;
+}inf;
+int main()
+{
+	int n;
+	scanf("%d",&n);
+	inf a[n];
+	for(int i=0;i<n;i++){
+		scanf("%lld %d %d",&a[i].id,&a[i].s1,&a[i].s2);
+	}
+	int m;
+	scanf("%d",&m);
+	int r[m];
+	for(int i=0;i<m;i++){
+		scanf("%d",&r[i]);
+	}
+	for(int i=0;i<m-1;i++){
+		for(int j=0;j<n;j++){
+			if(r[i]==a[j].s1){
+				printf("%lld %d\n",a[j].id,a[j].s2);
+			}
+		}
+	}
+	for(int j=0;j<n;j++){
+		if(r[m-1]==a[j].s1){
+			printf("%lld %d",a[j].id,a[j].s2);
+		}
+	}
+	return 0;
+ } 
