@@ -1,0 +1,50 @@
+//著名的快速排序算法里有一个经典的划分过程：我们通常采用某种方法取一个元素作为主元，通过交换，把比主元小的元素放到它的左边，
+//比主元大的元素放到它的右边。 给定划分后的 N 个互不相同的正整数的排列，请问有多少个元素可能是划分前选取的主元？
+//因为数据多，所以要高效。我的做法是从左开始遍历，不断更新max凡是更新max的都有可能，一旦小于max再从可能的数组里刷。这样效率高。
+//这题输出真的搞，是零要输出两个空行。
+#include<stdio.h>
+#include<stdlib.h>
+int cmp(const void *a,const void *b){
+	return *(int *)a-*(int *)b;
+}
+int main()
+{
+	int n=0;
+	scanf("%d",&n);
+	long long int max=0;
+	int cnt=0;
+	long long int a[n],b[n];
+	for(int i=0;i<n;i++){
+		scanf("%lld",&a[i]);
+		b[i]=0;
+	}
+	for(int i=0;i<n;i++){
+		if(a[i]>=max){
+			max=a[i];
+			b[cnt]=a[i];
+			cnt++;
+		}
+		if(a[i]<max){
+			for(int j=0;j<cnt;j++){
+				if(b[j]>a[i]){
+					for(int k=j;k<cnt;k++){
+						b[k]=0;
+						cnt=j;
+					}
+					break;
+				}
+			}
+		}
+	}
+	qsort(b,cnt,sizeof(b[0]),cmp);
+
+	printf("%d\n",cnt);
+	for(int i=0;i<cnt;i++){
+		if(i!=0){
+			printf(" ");
+		}
+		printf("%lld",b[i]);
+	}	
+	printf("\n");
+	return 0;
+}
