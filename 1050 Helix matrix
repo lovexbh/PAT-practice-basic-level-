@@ -1,0 +1,59 @@
+//本题要求将给定的 N 个正整数按非递增的顺序，填入“螺旋矩阵”。所谓“螺旋矩阵”，是指从左上角第 1 个格子开始，按顺时针螺旋方向填充。
+//要求矩阵的规模为 m 行 n 列，满足条件：m×n 等于 N；m≥n；且 m−n 取所有可能值中的最小值。
+//注意输出和螺旋
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+int cmp(const void *a,const void *b){
+	return *(int*)b-*(int*)a; 
+}
+int main()
+{
+	int n;
+	int cnt=0;
+	scanf("%d",&n);
+	int num[n];
+	for(int i=0;i<n;i++){
+		scanf("%d",&num[i]);
+	}
+	int M=0;
+	int N=0;
+	qsort(num,n,sizeof(num[0]),cmp);
+	for(int i=1;i<=(double) sqrt(n);i++){
+		if(i>=N&&n%i==0){
+			N=i;
+		}
+	}
+	M=n/N;
+	int num1[M+1][N+1];
+	int p=0;
+	int q=0;
+	for(int i=0;i<n;i++){
+		num1[p][q]=num[i];
+		if((p-q)<=1&&(p+q)<(N-1)){
+			q++;
+			continue;
+		}
+		if((p+q)>=N-1&&(p-q)<(M-N)){
+			p++;
+			continue;
+		}
+		if((p-q)>=(M-N)&&(p+q)>(M-1)){
+			q--;
+			continue;
+		}
+		if((p+q)<=(M-1)&&(p-q)>1){
+			p--;
+			continue;
+		}
+	}
+	for(int i=0;i<M;i++){
+		for(int j=0;j<N;j++){
+			if(j==N-1){
+				printf("%d\n",num1[i][j]);
+			}
+			else printf("%d ",num1[i][j]);
+		}
+	}
+	return 0;
+}
