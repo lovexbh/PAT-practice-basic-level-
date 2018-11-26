@@ -1,0 +1,40 @@
+//萌萌哒表情符号通常由“手”、“眼”、“口”三个主要部分组成。简单起见，我们假设一个表情符号是按下列格式输出的：
+//[左手]([左眼][口][右眼])[右手]
+//现给出可选用的符号集合，请你按用户的要求输出表情。
+//输入用到正则输入以及输出要注意，其他还好
+#include<stdio.h>
+int GET(char arr[10][5]){//这个函数有两个作用，一个是读入数据，一个是输出该类型的数量 
+	int i=0;
+	char c;
+	while((c=getchar())!='\n'){
+		if(c=='['){
+			scanf("%[^]]",&arr[i++]);
+		}
+	}
+	return i;
+}
+int main()
+{
+	int k;
+	char hand[10][5],eye[10][5],mouth[10][5];
+	int cnt1=GET(hand);
+	int cnt2=GET(eye);
+	int cnt3=GET(mouth);
+	scanf("%d",&k);
+	int num[k][5];
+	for(int i=0;i<k;i++){
+		for(int j=0;j<5;j++){
+			scanf("%d",&num[i][j]);
+		}
+	}
+	for(int i=0;i<k;i++){
+		if(num[i][0]>cnt1||num[i][1]>cnt2||num[i][2]>cnt3||num[i][3]>cnt2||num[i][4]>cnt1||num[i][0]<1||num[i][1]<1||num[i][2]<1||num[i][3]<1||num[i][4]<1){
+			printf("Are you kidding me? @\\/@"); 
+		}
+		else{
+			printf("%s(%s%s%s)%s",hand[num[i][0]-1],eye[num[i][1]-1],mouth[num[i][2]-1],eye[num[i][3]-1],hand[num[i][4]-1]);
+		}
+		printf("\n");
+	}
+	return 0;
+}
