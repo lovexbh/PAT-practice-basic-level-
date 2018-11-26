@@ -1,0 +1,51 @@
+//本题的基本要求非常简单：给定 N 个实数，计算它们的平均值。但复杂的是有些输入数据可能是非法的。一个“合法”的输入是 [−1000,1000] 区间内的实数，
+//并且最多精确到小数点后 2 位。当你计算平均值的时候，不能把那些非法的数据算在内。
+//很难，很多新知识，看代码吧
+#include<stdio.h>
+#include<ctype.h>
+#include<string.h>
+#include<stdlib.h>
+int main(){
+	int N,K=0;
+	double sum=0.0,temp=0.0;//和和临时储存的值
+	char num[9],str[9],c;//合法输入最多8位 
+	scanf("%d",&N);
+	for(int i=0;i<N;i++){
+		scanf("%8s",&str);//先读取最多不超过前8个字符
+		c=ungetc(getchar(),stdin);//读取下一个字符并将其推回，stdin表示文件输入流
+		int len=strlen(str);
+		int islegal=0;//读取字符串长度并判断是否合法。 
+		if(isspace(c)){//之后是空格或回车，说明合法 
+			islegal=1;
+			sscanf(str,"%lf",&temp);//sscanf函数，将字符串转为浮点数
+			sprintf(num,"%.2f",temp);//sprintf函数，将数字变量转变为字符串 
+			for(int j=0;j<len;j++){
+				if(num[j]!=str[j]){
+					islegal=0;
+					break;
+				}
+			}
+		}
+		if(islegal==0||temp>1000||temp<-1000){
+			printf("ERROR: %s",str);
+			while(!isspace(c=getchar())){//输出剩下的内容 
+				putchar(c);
+			}
+			printf(" is not a legal number\n");
+		}
+		else{
+			sum+=temp;
+			K++;
+		}
+	}
+	if(K==0){
+		printf("The average of 0 numbers is Undefined\n");
+	} 
+	else if(K==1){
+		printf("The average of 1 number is %.2f\n",sum);
+	}
+	else{
+		printf("The average of %d numbers is %.2f\n",K,sum/K);
+	}
+	return 0;
+}
