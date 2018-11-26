@@ -1,0 +1,18 @@
+//复数可以写成(A + Bi)的常规形式，其中A是实部，B是虚部，i是虚数单位，满足i2 = -1；也可以写成极坐标下的指数形式(R*e(Pi))，
+//其中R是复数模，P是辐角，i是虚数单位，其等价于三角形式 R(cos(P) + isin(P))。
+//现给定两个复数的R和P，要求输出两数乘积的常规形式。
+//用到math.h的三角函数，还有就是注意四舍五入得到0却带负号的情况。
+#include<stdio.h>
+#include<math.h>
+int main()
+{
+	double a1,b1,a2,b2,a3,b3;
+	int flag=1;
+	scanf("%lf %lf %lf %lf",&a1,&b1,&a2,&b2);
+	a3=a1*a2*cos(b1)*cos(b2)-a1*a2*sin(b1)*sin(b2);
+	b3=a1*a2*cos(b1)*sin(b2)+a1*a2*cos(b2)*sin(b1);
+	if (a3< 0 && a3 > -0.005) a3 = 0;//负的接近0的数四舍五入后是-0.00 
+    if (b3 < 0 && b3 > -0.005) b3 = 0;
+	printf("%.2f%+.2fi",a3,b3);//%+是有符号的. 
+	return 0;
+ } 
