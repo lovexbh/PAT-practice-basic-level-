@@ -1,0 +1,89 @@
+//拍集体照时队形很重要，这里对给定的 N 个人 K 排的队形设计排队规则如下：
+//每排人数为 N/K（向下取整），多出来的人全部站在最后一排；
+//后排所有人的个子都不比前排任何人矮；
+//每排中最高者站中间（中间位置为 m/2+1，其中 m 为该排人数，除法向下取整）；
+//每排其他人以中间人为轴，按身高非增序，先右后左交替入队站在中间人的两侧（例如5人身高为190、188、186、175、170，则队形为175、188、190、186、170。
+//这里假设你面对拍照者，所以你的左边是中间人的右边）；
+//若多人身高相同，则按名字的字典序升序排列。这里保证无重名。
+//现给定一组拍照人，请编写程序输出他们的队形。
+//不算太难，注意排队的写法即可
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct student{
+	char name[9];
+	int height;
+}stu;
+int cmp(const void *a,const void *b){
+	stu *p1=(struct student*)a;
+	stu *p2=(struct student*)b;
+	if(p1->height!=p2->height){
+		return (p2->height-p1->height);
+	}
+	else if(p1->name[0]!=p2->name[0]){
+		return (p1->name[0]-p2->name[0]);
+	}
+	else{
+		return (p1->name[1]-p2->name[1]);
+	} 
+}
+int main()
+{
+	int N,K;
+	scanf("%d %d",&N,&K);
+	stu a[N];
+	for(int i=0;i<N;i++){
+		scanf("%s %d",&a[i].name,&a[i].height);
+	}
+	qsort(a,N,sizeof(a[0]),cmp);
+	int x,y,z;
+	x=N/K;
+	y=x+N%K;
+	int b[K][y];
+	z=y/2;
+	b[0][z]=0;
+	for(int i=1;i<y;i++){
+		if(i%2==1){
+			z-=i;
+			b[0][z]=i;
+		}
+		else{
+			z+=i;
+			b[0][z]=i;
+		}
+	}
+	for(int j=1;j<K;j++){
+		z=x/2;
+		b[j][z]=y+(j-1)*x;
+		for(int i=1;i<x;i++){
+			if(i%2==1){
+				z-=i;
+				b[j][z]=y+(j-1)*x+i;
+			}
+			else{
+				z+=i;
+				b[j][z]=y+(j-1)*x+i;
+			}
+		}
+	}
+	for(int i=0;i<y;i++){
+		printf("%s",a[b[0][i]].name);
+		if(i!=(y-1)){
+			printf(" ");
+		}
+		else{
+			printf("\n");
+		}
+	}
+	for(int j=1;j<K;j++){
+		for(int i=0;i<x;i++){
+			printf("%s",a[b[j][i]].name);
+			if(i!=(x-1)){
+				printf(" ");
+			}
+			else{
+				printf("\n");
+			}
+		}
+	}
+	return 0;
+}
