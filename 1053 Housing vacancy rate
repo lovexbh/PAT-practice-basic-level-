@@ -1,0 +1,43 @@
+//在不打扰居民的前提下，统计住房空置率的一种方法是根据每户用电量的连续变化规律进行判断。判断方法如下：
+//在观察期内，若存在超过一半的日子用电量低于某给定的阈值 e，则该住房为“可能空置”；
+//若观察期超过某给定阈值 D 天，且满足上一个条件，则该住房为“空置”。
+//现给定某居民区的住户用电量数据，请你统计“可能空置”的比率和“空置”比率，即以上两种状态的住房占居民区住房总套数的百分比。
+//注意两种情况的条件
+#include<stdio.h>
+int main()
+{
+	int N;
+	double e;
+	int D;
+	int K;
+	double cnt1=0.0;
+	double cnt2=0.0;
+	char c='%';
+	scanf("%d %lf %d",&N,&e,&D);
+	for(int i=0;i<N;i++){
+		int flag=0;
+		int FLAG=0;
+		scanf("%d",&K);
+		double m;
+		int count=0;
+		for(int j=0;j<K;j++){
+			scanf("%lf",&m);
+			if(m<e){
+				count++;
+			}
+		}
+		if(count>(K/2)){
+			flag++;
+		}
+		if(K>D){
+			FLAG++;
+		}
+		if(flag==1&&FLAG==0) cnt1++;
+		if(flag==1&&FLAG==1) cnt2++;
+	}
+	double P1,P2;
+	P1=cnt1/N*100;
+	P2=cnt2/N*100;
+	printf("%0.1f%c %0.1f%c",P1,c,P2,c);
+	return 0;
+}
