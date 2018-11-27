@@ -1,0 +1,24 @@
+//英国天文学家爱丁顿很喜欢骑车。据说他为了炫耀自己的骑车功力，还定义了一个“爱丁顿数” E ，
+//即满足有 E 天骑车超过 E 英里的最大整数 E。据说爱丁顿自己的 E 等于87。
+//现给定某人 N 天的骑车距离，请你算出对应的爱丁顿数 E（≤N）
+//降序排序完就很简单了,如果数组的值大于下标加一的话，那么下标加一就是最大的一个。（出循环的那个）
+#include<stdio.h>
+#include<stdlib.h>
+int cmp(const void*a,const void *b){
+	return *(int*)b-*(int*)a;
+}
+int main(){
+	int n;
+	scanf("%d",&n);
+	int num[n];
+	for(int i=0;i<n;i++){
+		scanf("%d",&num[i]);
+	}
+	int number=0;
+	qsort(num,n,sizeof(num[0]),cmp);
+	while(num[number]>number+1&&number<n){
+		number++;
+	}
+	printf("%d",number);
+	return 0;
+}
