@@ -1,0 +1,33 @@
+//给定一串长度不超过100000的字符串，本题要求你将其中所有英文字母的序号（字母a-z对应序号1-26，不分大小写）相加，得到整数N，
+//然后再分析一下N的二进制表示中有多少0、多少1。例如给定字符串“PAT (Basic)”，其字母序号之和为：16+1+20+2+1+19+9+3=71，
+//而71的二进制是1000111，即有3个0、4个1。
+//二进制和十进制类似，直接从最后一位开始取余数，然后更新值，再取余
+#include<stdio.h>
+int main(){
+	char ch='=';
+	long int num=0;
+	while((ch=getchar())!='\n'){
+		if(ch>='a'&&ch<='z'){
+			num+=(ch-'a'+1);
+		}
+		else if(ch>='A'&&ch<='Z'){
+			num+=(ch-'A'+1);
+		}
+		else{
+			continue;
+		}
+	}
+	long int x=0;
+	long int y=0;
+	while(num!=0){
+		if(num%2==0){
+			x++;
+		}
+		if(num%2==1){
+			y++;
+		}
+		num/=2;
+	}
+	printf("%ld %ld",x,y);
+	return 0;
+}
