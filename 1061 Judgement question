@@ -1,0 +1,30 @@
+//判断题的评判很简单，本题就要求你写个简单的程序帮助老师判题并统计学生们判断题的得分。
+//多写几个数组就完事了
+#include<stdio.h>
+int main(){
+	int M,N;
+	scanf("%d %d",&N,&M);
+	int score[M];
+	int stu[N];
+	int right[M];
+	int ans;
+	for(int i=0;i<M;i++){
+		scanf("%d",&score[i]);
+	}
+	for(int i=0;i<M;i++){
+		scanf("%d",&right[i]);
+	}
+	for(int i=0;i<N;i++){
+		stu[i]=0;
+		for(int j=0;j<M;j++){
+			scanf("%d",&ans);
+			if(ans==right[j]){
+				stu[i]+=score[j];
+			}
+		}
+	}
+	for(int i=0;i<N;i++){
+		printf("%d\n",stu[i]);
+	}
+	return 0;
+} 
