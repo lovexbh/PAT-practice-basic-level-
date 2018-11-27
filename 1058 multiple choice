@@ -1,0 +1,73 @@
+//批改多选题是比较麻烦的事情，本题就请你写个程序帮助老师批改多选题，并且指出哪道题错的人最多。
+//注意输入输出的问题，这个题目真的讨厌
+#include<stdio.h>
+int main(){
+	int M,N;
+	scanf("%d %d",&N,&M);
+	int score[M],choice[M],right[M],score1[N],wrong[M];
+	char a[M][7];
+	char ans;
+	int num;
+	for(int i=0;i<M;i++){
+		scanf("%d %d %d",&score[i],&choice[i],&right[i]);
+		for(int j=0;j<right[i];j++){
+		getchar();
+		a[i][j]=getchar();
+		}
+		getchar();
+		wrong[i]=0;
+	}
+	for(int i=0;i<N;i++){
+		score1[i]=0;
+		for(int j=0;j<M;j++){
+			int flag=1;
+			int cnt=0;
+			while((ans=getchar())!=')'){
+				if(ans>='0'&&ans<='5'){
+					if((ans-'0')!=right[j]){
+						flag=0;
+					}
+				}
+				else if(ans>='a'&&ans<='e'){
+					if(ans!=a[j][cnt]){
+						flag=0;
+					}
+					cnt++;
+				}
+			}
+			getchar();
+			if(flag==0){
+				wrong[j]++;
+			}
+			if(flag==1){
+				score1[i]+=score[j];
+			}
+		}
+	}
+	for(int i=0;i<N;i++){
+		printf("%d\n",score1[i]);
+	}
+	int max=0; 
+	int t=0;
+	for(int j=0;j<M;j++){
+		if(wrong[j]>=max){
+			max=wrong[j];
+			t=j;
+		}
+	}
+	if(max==0){
+		printf("Too simple");
+	}
+	else{
+		printf("%d ",max);
+		for(int j=0;j<M;j++){
+			if(wrong[j]==max&&j!=t){
+				printf("%d ",j+1);
+			}
+			if(j==t){
+				printf("%d",j+1);
+			}
+		}
+	}
+	return 0;
+}
