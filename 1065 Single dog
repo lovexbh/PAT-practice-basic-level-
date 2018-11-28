@@ -1,0 +1,48 @@
+//“单身狗”是中文对于单身人士的一种爱称。本题请你从上万人的大型派对中找出落单的客人，以便给予特殊关爱
+//注意输出id是5位数就行了
+#include<stdio.h>
+int main(){
+	long int n;
+	scanf("%ld",&n);
+	long int a,b,c;
+	long int couple[100000],single[100000],count[10000];
+	for(long int i=0;i<100000;i++){
+		couple[i]=-1;
+		single[i]=-1;
+	}
+	for(long int i=0;i<n;i++){
+		scanf("%ld %ld",&a,&b);
+		couple[a]=b;
+		couple[b]=a;
+	}
+	int k;
+	scanf("%ld",&k);
+	for(int i=0;i<k;i++){
+		scanf("%ld",&c);
+		if(couple[c]==-1){
+			single[c]++;
+		}
+		else{
+			single[c]++;
+		}
+	}
+	int cnt=0;
+	for(long int i=0;i<100000;i++){
+		if(couple[i]==-1&&single[i]==0){
+			count[cnt]=i;
+			cnt++;
+		}
+		else if(couple[i]!=-1&&single[i]==0&&single[couple[i]]==-1){
+			count[cnt]=i;
+			cnt++;
+		}
+	}
+	printf("%d\n",cnt);
+	for(int i=0;i<cnt;i++){
+		printf("%05ld",count[i]);
+		if(i<cnt-1){
+			printf(" ");
+		}
+	}
+	return 0;
+}
