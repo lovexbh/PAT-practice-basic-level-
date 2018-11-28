@@ -1,0 +1,42 @@
+//一个分数一般写成两个整数相除的形式：N/M，其中 M 不为0。最简分数是指分子和分母没有公约数的分数表示形式。
+//现给定两个不相等的正分数 N1/M1和 N2/M2，要求你按从小到大的顺序列出它们之间分母为 K 的最简分数。
+//本身不难，甚至没有出大于一的分数情况，但是两个输入的分数大小没比较过，是个坑
+#include<stdio.h>
+int gys(int a,int b){
+	int m=a%b;
+	while(m!=0){
+		a=b;
+		b=m;
+		m=a%b;
+	}
+	return b;
+}
+int main(){
+	int n1,n2,m1,m2,k;
+	int cnt=0;
+	int num[1000];
+	scanf("%d/%d %d/%d %d",&n1,&m1,&n2,&m2,&k);
+	double x,y,z;
+	x=(double)n1/m1;
+	y=(double)n2/m2;
+	double temp;
+	if(x>y){
+		temp=x;
+		x=y;
+		y=temp;
+	}
+	for(int i=1;i<1000;i++){
+		z=(double)i/k;
+		if(z>x&&z<y&&(gys(i,k))==1){
+			num[cnt]=i;
+			cnt++;
+		}
+	}
+	for(int i=0;i<cnt;i++){
+		printf("%d/%d",num[i],k);
+		if(i<cnt-1){
+			printf(" ");
+		}
+	}
+	return 0;
+}
