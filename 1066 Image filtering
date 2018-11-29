@@ -1,0 +1,30 @@
+//图像过滤是把图像中不重要的像素都染成背景色，使得重要部分被凸显出来。现给定一幅黑白图像，要求你将灰度值位于某指定区间内的所
+//有像素颜色都用一种指定的颜色替换。
+//水题，注意输出三位即可
+#include<stdio.h>
+int main(){
+	int M,N,A,B,X,num;
+	scanf("%d %d %d %d %d",&M,&N,&A,&B,&X);
+	int store[500][500];
+	for(int i=0;i<M;i++){
+		for(int j=0;j<N;j++){
+			scanf("%d",&num);
+			if(num>=A&&num<=B){
+				store[i][j]=X;
+			}
+			else{
+				store[i][j]=num;
+			}
+		}
+	}
+	for(int i=0;i<M;i++){
+		for(int j=0;j<N;j++){
+			printf("%03d",store[i][j]);
+			if(j<N-1){
+				printf(" ");
+			}
+		}
+		printf("\n");
+	}
+	return 0;
+} 
