@@ -1,0 +1,107 @@
+//对于计算机而言，颜色不过是像素点对应的一个 24 位的数值。现给定一幅分辨率为 M×N 的画，要求你找出万绿丛中的一点红，即有独一无二颜色的那个像素点，
+//并且该点的颜色与其周围 8 个相邻像素的颜色差充分大。
+//难点1，该颜色只能出现一次，难点2：和周围8个点差可正可负，考虑绝对值。难点3考虑边边角角的情况。代码改了很多遍，没优化。
+#include<stdio.h>
+#include<math.h>
+int main(){
+	static long long num[1002][1002];
+	static long long cf[1000],count[1000];
+	int m,n,t,x;
+	int cnt=0;
+	int A[2];
+	A[0]=0;
+	A[1]=0;
+	long long a[8];
+	int isbreak=0;
+	scanf("%d %d %d",&m,&n,&t);
+	for(int i=0;i<1000;i++){
+		cf[i]=0;
+		count[i]=0;
+	}
+	for(int i=0;i<=m+1;i++){
+		num[0][i]=0;
+		num[n+1][i]=0;
+	}
+	for(int i=0;i<=n+1;i++){
+		num[i][0]=0;
+		num[i][m+1]=0;
+	}
+	for(int i=1;i<=n;i++){
+		for(int j=1;j<=m;j++){
+			int q=1;
+			scanf("%lld",&x);
+			num[i][j]=x;
+			if(cnt==0){
+				cf[cnt]=x;
+				count[cnt]++;
+				cnt++;
+			}
+			else{
+				for(int k=0;k<cnt;k++){
+					if(cf[k]==x){
+						count[k]++;
+						q=0;
+					}
+				}
+				if(q==1){
+					cf[cnt]=x;
+					count[cnt]++;
+					cnt++;
+				}
+			}
+		}
+	}
+	for(int i=1;i<=n;i++){
+		for(int j=1;j<=m;j++){
+			int flag=1;
+			for(int k=0;k<cnt;k++){
+				if(cf[k]==num[i][j]){
+					if(count[k]>1){
+						flag=0;
+						break;
+					}
+					else{
+						a[0]=abs(num[i][j]-num[i][j+1]);
+						a[1]=abs(num[i][j]-num[i+1][j+1]);
+						a[2]=abs(num[i][j]-num[i-1][j+1]);
+						a[3]=abs(num[i][j]-num[i][j-1]);
+						a[4]=abs(num[i][j]-num[i+1][j-1]);
+						a[5]=abs(num[i][j]-num[i-1][j-1]);
+						a[6]=abs(num[i][j]-num[i-1][j]);
+						a[7]=abs(num[i][j]-num[i+1][j]);
+						for(int v=0;v<8;v++){
+							if(a[v]<=t){
+								flag=0;
+								break;
+							}
+						}
+						break;
+					}
+				}
+			}
+			if(flag==1){
+				if(A[0]==0&&A[1]==0){
+					A[0]=j;
+					A[1]=i;
+				}
+				else{
+					isbreak=1;
+					break;
+				}
+			}
+		}
+		if(isbreak){
+			break;
+		}
+	}
+	if(isbreak){
+		printf("Not Unique");
+	}
+	else if(A[0]==0&&A[1]==0){
+		printf("Not Exist");
+	}
+	else{
+		printf("(%d, %d): %lld",A[0],A[1],num[A[1]][A[0]]);
+	}
+	return 0;
+}
