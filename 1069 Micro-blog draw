@@ -1,0 +1,42 @@
+//小明 PAT 考了满分，高兴之余决定发起微博转发抽奖活动，从转发的网友中按顺序每隔 N 个人就发出一个红包。请你编写程序帮助他确定中奖名单
+//主要是几个string函数的运用要牢记
+#include<stdio.h>
+#include<string.h>
+int main(){
+	int m,n,s;
+	char id[1002][21];
+	char a[1002][21];
+	char b[21];
+	int cnt=1;
+	int p;
+	scanf("%d %d %d",&m,&n,&s);
+	for(int i=1;i<=m;i++){
+		scanf("%s",&id[i]);
+	}
+	p=s;
+	while(p<=m){
+		int flag=0;
+		strcpy(b,id[p]);
+		for(int i=1;i<cnt;i++){
+			if(strcmp(a[i],b)==0){
+				p++;
+				flag=1;
+				break;
+			}
+		}
+		if(flag==0){
+			strcpy(a[cnt],b);
+			cnt++;
+			p+=n;
+		}
+	}
+	if(cnt==1){
+		printf("Keep going...");
+	}
+	else{
+		for(int i=1;i<cnt;i++){
+			printf("%s\n",a[i]);
+		}
+	}
+	return 0;
+}
