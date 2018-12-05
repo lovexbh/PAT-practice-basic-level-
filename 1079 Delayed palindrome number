@@ -1,0 +1,64 @@
+#include<stdio.h>
+#include<string.h>
+int ishw(char c[],int k){
+	for(int i=0;i<k/2;i++){
+		if(c[i]!=c[k-i-1]){
+			return 0;
+		}
+	}
+	return 1;
+}
+int main(){
+	int cnt=0;
+	char u[1020],v[1020],w[1020];
+	for(int i=0;i<1020;i++){
+		u[i]='\0';
+		v[i]='\0';
+		w[i]='\0';
+	}
+	scanf("%s",&u);
+	int len;
+	long long int num1,num2,num;
+	while(cnt<10){
+		int x=0;
+		int y=0;
+		len=strlen(u);
+		if(ishw(u,len)){
+			printf("%s is a palindromic number.",u);
+			break;
+		}
+		else{
+			for(int i=0;i<len;i++){
+				v[i]=u[len-i-1];
+			}
+			for(int i=0;i<len;i++){
+				x=v[len-i-1]-'0'+u[len-i-1]-'0'+y;
+				y=x/10;
+				x=x%10;
+				w[len-i-1]=x+'0';
+				if(i==len-1&&y>0){
+					for(int j=0;j<len;j++){
+						w[len-j]=w[len-j-1];
+					}
+					w[0]=y+'0';
+				} 
+			}
+			printf("%s + %s = %s\n",u,v,w);
+			if(y>0){
+				for(int i=0;i<len+1;i++){
+					u[i]=w[i];
+				}
+			}
+			if(y==0){
+				for(int i=0;i<len;i++){
+					u[i]=w[i];
+				}
+			} 
+		}
+		cnt++;
+	}
+	if(cnt==10){
+		printf("Not found in 10 iterations.");
+	}
+	return 0;
+}
