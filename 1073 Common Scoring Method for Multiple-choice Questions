@@ -1,0 +1,91 @@
+//批改多选题是比较麻烦的事情，有很多不同的计分方法。有一种最常见的计分方法是：如果考生选择了部分正确选项，并且没有选择任何错误选项，
+//则得到 50% 分数；如果考生选择了任何一个错误的选项，则不能得分。本题就请你写个程序帮助老师批改多选题，
+//并且指出哪道题的哪个选项错的人最多。
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct{
+	int score;//满分值
+	int cnt;//选项数量
+	int rcnt;//正确选项数量
+	int choice[5];//下标代表选项,这里显然字符串变成数字更好 
+}stu; 
+int main(){
+	int N,M;
+	scanf("%d %d",&N,&M);
+	stu q[M];
+	for(int i=0;i<M;i++){
+		for(int j=0;j<5;j++){
+			q[i].choice[j]=0;
+		}
+	}
+	for(int i=0;i<M;i++){
+		scanf("%d %d %d",&q[i].score,&q[i].cnt,&q[i].rcnt);//记录题目信息 
+		char c;
+		for(int j=0;j<q[i].rcnt;j++){
+			scanf(" %c",&c);
+			q[i].choice[c-'a']++;//记录答案 
+		}
+	}
+	int error[M][5];
+	int max=0;
+	for(int i=0;i<M;i++){
+		for(int j=0;j<5;j++){
+			error[i][j]=0;//初始化 
+		}
+	}
+	for(int i=0;i<N;i++){//答题情况 
+		getchar();
+		double grade=0.0;
+		for(int j=0;j<M;j++){
+			int chocnt;//选择的数量 
+			int isright=1;
+			int isall=1;//选择是否正确
+			char c;
+			int cho[5]={0};
+			scanf("(%d",&chocnt);
+			for(int k=0;k<chocnt;k++){
+				scanf(" %c",&c);
+				cho[c-'a']=1;
+			}
+			for(int k=0;k<5;k++){
+				if(q[j].choice[k]==1&&cho[k]==0){//正确答案有但没选 
+					isall=0;
+					error[j][k]++;
+				}
+				else if(q[j].choice[k]==0&&cho[k]==1){//答案没有但是选了
+					isright=0;
+					error[j][k]++; 
+				}
+				if(max<=error[j][k]){
+					max=error[j][k];
+				}
+			}
+			scanf(")");
+			if(j!=M-1){
+				scanf(" ");
+			}
+			if(isright){
+				if(!isall){
+					grade+=q[j].score/2.0;
+				}
+				else{
+					grade+=q[j].score;
+				}
+			} 
+		}
+		printf("%.1f\n",grade);
+	}
+	if(max==0){
+		printf("Too simple");
+	}
+	else{
+		for(int i=0;i<M;i++){
+			for(int j=0;j<5;j++){
+				if(error[i][j]==max){
+					printf("%d %d-%c\n",error[i][j],i+1,j+'a');
+				}
+			}
+		}
+	}
+	return 0;
+}
