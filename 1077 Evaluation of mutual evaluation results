@@ -1,0 +1,50 @@
+#include<stdio.h>
+int main(){
+	int N,M;
+	scanf("%d %d",&N,&M);
+	int t[101];
+	int stu[101][101];
+	int q;
+	int max[101];
+	int min[101];
+	for(int i=1;i<=N;i++){
+		max[i]=0;
+		min[i]=101;
+		scanf("%d",&t[i]);
+		stu[i][100]=0;
+		for(int j=1;j<=N-1;j++){
+			scanf("%d",&q);
+			if(q>=0&&q<=M){
+				stu[i][100]++;
+				stu[i][j]=q;
+				if(q>max[i]){
+					max[i]=q;
+				}
+				if(q<min[i]){
+					min[i]=q;
+				}
+			}
+			else{
+				stu[i][j]=-1;
+			}
+		}
+	}
+	for(int i=1;i<=N;i++){
+		int sum=0;
+		int g;
+		double g1,g2;
+		for(int j=1;j<=N-1;j++){
+			if(stu[i][j]>=0){
+				sum+=stu[i][j];
+			}
+		}
+		g1=(sum-max[i]-min[i])/((stu[i][100]-2)*1.0);
+		g2=(g1+t[i])/2.0;
+		g=(int)g2;
+		if((g2-g)>=0.5){
+			g++;
+		}
+		printf("%d\n",g);
+	}
+	return 0;
+}
