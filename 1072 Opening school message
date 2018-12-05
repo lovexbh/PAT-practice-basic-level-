@@ -1,0 +1,46 @@
+#include<stdio.h>
+int main(){
+	int M,N;
+	scanf("%d %d",&N,&M);
+	int wj[6];
+	for(int i=0;i<M;i++){
+		scanf("%d",&wj[i]);
+	}
+	char name[1000][5];
+	int sl[1000];
+	int wp[1000][10];
+	for(int i=0;i<N;i++){
+		scanf("%s %d",&name[i],&sl[i]);
+		for(int j=0;j<sl[i];j++){
+			scanf("%d",&wp[i][j]);
+		}
+	}
+	int cnt=0;
+	int sum=0;
+	int wjwp[1000][10];
+	for(int i=0;i<N;i++){
+		int count=0;
+		for(int j=0;j<sl[i];j++){
+			for(int k=0;k<M;k++){
+				if(wj[k]==wp[i][j]){
+					wjwp[i][count]=wj[k];
+					count++;
+					break;
+				}
+			}
+		}
+		if(count>0){
+			printf("%s:",name[i]);
+			for(int p=0;p<count;p++){
+				printf(" %04d",wjwp[i][p]);
+				if(p==count-1){
+					printf("\n");
+				}
+			}
+			cnt++;
+		}
+		sum+=count;
+	}
+	printf("%d %d",cnt,sum);
+	return 0;
+}
