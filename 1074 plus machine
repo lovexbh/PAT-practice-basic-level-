@@ -1,0 +1,45 @@
+#include<stdio.h>
+#include<string.h>
+int main(){
+	char table[21],num1[21],num2[21],sum[22]={0};
+	scanf("%s",&table);
+	scanf("%s",&num1);
+	scanf("%s",&num2);
+	int base,a,b;
+	int len=strlen(table),len1=strlen(num1),len2=strlen(num2);
+	for(int i=len-1;i>=0;i--){
+		if((len-i)<=len1){
+			a=num1[len1-len+i]-'0';
+		}
+		else{
+			a=0;
+		}
+		if((len-i)<=len2){
+			b=num2[len2-len+i]-'0';
+		}
+		else{
+			b=0;
+		}
+		if(table[i]=='0'){
+			base=10;
+		}
+		else{
+			base=table[i]-'0';
+		}
+		sum[i+1]+=a+b;
+		if(sum[i+1]>=base){
+			sum[i]+=1;//题目保证数字合法，只可能进一位 
+		}
+		sum[i+1]%=base;
+		sum[i+1]+='0';
+	}
+	sum[0]+='0';
+	for(int i=0;i<22;i++){
+		if(sum[i]!=0&&sum[i]!='0'){
+			printf("%s",sum+i);//从sum的第i位开始 
+			return 0;
+		}
+	}
+	printf("0");//和为0的情况 
+	return 0;
+} 
